@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>単価・割引計算アプリ</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>計算アプリ</h1>
+            <p>単価計算と割引計算ができます</p>
+            <div class="tab-container">
+                <button class="tab-btn active" id="unitPriceTab">単価計算</button>
+                <button class="tab-btn" id="discountTab">割引計算</button>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="tab-content active" id="unitPriceContent">
+                <div class="status-message" id="statusMessage"></div>
+                
+                <div class="input-section">
+                    <div class="input-group">
+                        <label class="input-label">価格（円）</label>
+                        <div class="input-container">
+                            <input type="number" class="input-field" id="priceInput" placeholder="例: 298" step="0.01">
+                            <button class="voice-btn" id="priceVoiceBtn" title="音声入力">🎙️</button>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="input-label">容量</label>
+                        <div class="input-container">
+                            <input type="number" class="input-field" id="volumeInput" placeholder="例: 500" step="0.01">
+                            <button class="voice-btn" id="volumeVoiceBtn" title="音声入力">🎙️</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="unit-selector">
+                    <button class="unit-btn active" data-unit="100g">100gあたり</button>
+                    <button class="unit-btn" data-unit="1kg">1kgあたり</button>
+                    <button class="unit-btn" data-unit="100ml">100mlあたり</button>
+                    <button class="unit-btn" data-unit="1L">1Lあたり</button>
+                    <button class="unit-btn" data-unit="100個">100個あたり</button>
+                    <button class="unit-btn" data-unit="1個">1個あたり</button>
+                </div>
+                
+                <div class="result-section">
+                    <div class="result-label">単価</div>
+                    <div class="result-value" id="resultValue">-</div>
+                    <div class="result-unit" id="resultUnit">100gあたり</div>
+                </div>
+                
+                <div class="button-group">
+                    <button class="action-btn confirm-btn" id="confirmBtn">確定</button>
+                    <button class="action-btn clear-btn" id="clearBtn">クリア</button>
+                </div>
+                
+                <div class="history-section">
+                    <h3 class="history-title">直近の計算履歴</h3>
+                    <div class="history-list" id="historyList">
+                        <p class="no-history">まだ履歴がありません</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="discountContent">
+                <div class="status-message" id="discountStatusMessage"></div>
+                
+                <div class="input-section">
+                    <div class="input-group">
+                        <label class="input-label">価格（円）</label>
+                        <div class="input-container">
+                            <input type="number" class="input-field" id="discountPriceInput" placeholder="例: 100" step="0.01">
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="input-label">割引（%）</label>
+                        <div class="input-container">
+                            <input type="number" class="input-field" id="discountRateInput" placeholder="例: 30" step="0.01" max="100" min="0">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="result-section">
+                    <div class="result-label">計算結果</div>
+                    <div class="result-value" id="discountResultValue">-</div>
+                    <div class="result-unit" id="discountResultUnit">割引後の価格</div>
+                </div>
+                
+                <div class="button-group">
+                    <button class="action-btn confirm-btn" id="discountConfirmBtn">確定</button>
+                    <button class="action-btn clear-btn" id="discountClearBtn">クリア</button>
+                </div>
+                
+                <div class="history-section">
+                    <h3 class="history-title">直近の計算履歴</h3>
+                    <div class="history-list" id="discountHistoryList">
+                        <p class="no-history">まだ履歴がありません</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
