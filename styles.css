@@ -107,6 +107,7 @@ body {
 
 .input-field {
     flex: 1;
+    max-width: calc(100% - 60px);
     padding: 15px;
     border: 2px solid #e0e0e0;
     border-radius: 12px;
@@ -125,6 +126,8 @@ body {
 .voice-btn {
     width: 50px;
     height: 50px;
+    min-width: 50px;
+    min-height: 50px;
     border: none;
     border-radius: 50%;
     background: linear-gradient(135deg, #FF6B6B 0%, #ee5a52 100%);
@@ -135,6 +138,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
 }
 
 .voice-btn:hover {
