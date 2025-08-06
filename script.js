@@ -25,9 +25,13 @@ class CalculatorApp {
         document.getElementById('priceInput').addEventListener('input', () => this.calculate());
         document.getElementById('volumeInput').addEventListener('input', () => this.calculate());
 
-        // 音声入力ボタン
+        // 音声入力ボタン（単価計算）
         document.getElementById('priceVoiceBtn').addEventListener('click', () => this.startVoiceInput('price'));
         document.getElementById('volumeVoiceBtn').addEventListener('click', () => this.startVoiceInput('volume'));
+
+        // 音声入力ボタン（割引計算）
+        document.getElementById('discountPriceVoiceBtn').addEventListener('click', () => this.startVoiceInput('discountPrice'));
+        document.getElementById('discountRateVoiceBtn').addEventListener('click', () => this.startVoiceInput('discountRate'));
 
         // 単位選択ボタン
         document.querySelectorAll('.unit-btn').forEach(btn => {
@@ -81,8 +85,28 @@ class CalculatorApp {
         }
 
         this.activeInput = inputType;
-        const btn = document.getElementById(inputType + 'VoiceBtn');
-        btn.classList.add('listening');
+        let btnId;
+        
+        // ボタンIDを判定
+        switch(inputType) {
+            case 'price':
+                btnId = 'priceVoiceBtn';
+                break;
+            case 'volume':
+                btnId = 'volumeVoiceBtn';
+                break;
+            case 'discountPrice':
+                btnId = 'discountPriceVoiceBtn';
+                break;
+            case 'discountRate':
+                btnId = 'discountRateVoiceBtn';
+                break;
+        }
+        
+        if (btnId) {
+            const btn = document.getElementById(btnId);
+            btn.classList.add('listening');
+        }
         
         this.showStatus('音声を聞いています...', 'info');
         this.recognition.start();
@@ -90,8 +114,28 @@ class CalculatorApp {
 
     stopVoiceInput() {
         if (this.activeInput) {
-            const btn = document.getElementById(this.activeInput + 'VoiceBtn');
-            btn.classList.remove('listening');
+            let btnId;
+            
+            // ボタンIDを判定
+            switch(this.activeInput) {
+                case 'price':
+                    btnId = 'priceVoiceBtn';
+                    break;
+                case 'volume':
+                    btnId = 'volumeVoiceBtn';
+                    break;
+                case 'discountPrice':
+                    btnId = 'discountPriceVoiceBtn';
+                    break;
+                case 'discountRate':
+                    btnId = 'discountRateVoiceBtn';
+                    break;
+            }
+            
+            if (btnId) {
+                const btn = document.getElementById(btnId);
+                btn.classList.remove('listening');
+            }
         }
         this.activeInput = null;
         this.hideStatus();
@@ -102,12 +146,42 @@ class CalculatorApp {
         const numbers = text.match(/\d+(\.\d+)?/g);
         if (numbers && numbers.length > 0) {
             const value = parseFloat(numbers[0]);
-            const inputId = this.activeInput === 'price' ? 'priceInput' : 'volumeInput';
-            document.getElementById(inputId).value = value;
-            this.calculate();
-            this.showStatus(`${value}を入力しました`, 'info');
+            let inputId;
+            
+            // 入力先を判定
+            switch(this.activeInput) {
+                case 'price':
+                    inputId = 'priceInput';
+                    break;
+                case 'volume':
+                    inputId = 'volumeInput';
+                    break;
+                case 'discountPrice':
+                    inputId = 'discountPriceInput';
+                    break;
+                case 'discountRate':
+                    inputId = 'discountRateInput';
+                    break;
+            }
+            
+            if (inputId) {
+                document.getElementById(inputId).value = value;
+                
+                // 対応する計算を実行
+                if (this.activeInput === 'price' || this.activeInput === 'volume') {
+                    this.calculate();
+                    this.showStatus(`${value}を入力しました`, 'info');
+                } else {
+                    this.calculateDiscount();
+                    this.showDiscountStatus(`${value}を入力しました`, 'info');
+                }
+            }
         } else {
-            this.showStatus('数字が認識できませんでした', 'error');
+            if (this.activeInput === 'price' || this.activeInput === 'volume') {
+                this.showStatus('数字が認識できませんでした', 'error');
+            } else {
+                this.showDiscountStatus('数字が認識できませんでした', 'error');
+            }
         }
     }
 
