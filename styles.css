@@ -103,6 +103,7 @@ body {
     display: flex;
     gap: 10px;
     align-items: center;
+    width: 100%;
 }
 
 .input-field {
@@ -124,21 +125,29 @@ body {
 }
 
 .voice-btn {
-    width: 50px;
-    height: 50px;
-    min-width: 50px;
-    min-height: 50px;
-    border: none;
-    border-radius: 50%;
+    width: 50px !important;
+    height: 50px !important;
+    min-width: 50px !important;
+    min-height: 50px !important;
+    max-width: 50px !important;
+    max-height: 50px !important;
+    border: none !important;
+    border-radius: 50% !important;
     background: linear-gradient(135deg, #FF6B6B 0%, #ee5a52 100%);
     color: white;
     font-size: 20px;
     cursor: pointer;
     transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+    aspect-ratio: 1/1 !important;
+    box-sizing: border-box !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    vertical-align: middle !important;
+    line-height: 1 !important;
 }
 
 .voice-btn:hover {
